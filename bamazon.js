@@ -38,15 +38,40 @@ function buyItems(id, quant, price){
 	function(err, res){
 		if(err) throw err;
 		console.log("The total transaction price is " + (price * quant));
-		connection.destroy();
+		console.log();
+		console.log("Thank you for your purchase.");
+		console.log();
 	})
 }
 
 // Welcome greeting and show all items called to start the program, chooseItems is run on time delay to ensure it's run 
 // after items are displayed
-console.log("Welcome. Please choose from the following items.");
-showAllItems();
-setTimeout(chooseItems, 2000);
+function welcome(){
+	console.log("Welcome. Please choose from the following items.");
+}
+
+setTimeout(welcome, 1000);
+setTimeout(showAllItems, 4000);
+setTimeout(chooseItems, 6000);
+
+function anotherTransaction(){
+	inquirer.prompt([
+	{
+		type: 'confirm',
+		name: 'anotherPurchase',
+		message: 'Would you like to make another purchase?'
+	}
+		]).then(function(response){
+			if(response.anotherPurchase == true){
+				chooseItems();
+			}
+			else{
+				console.log();
+				console.log("Thank you for being a valued Bamazon customer. Have a good day.");
+				connection.destroy();
+			}
+		})
+}
 
 // The meat of the program, get user input to choose the item and product and use and pass along those choices 
 // in subsequent queries and functions
@@ -62,12 +87,15 @@ function chooseItems(){
 	}
 	]).then(function(replies){
 		var chosenId = replies.chooseProd;
+		console.log();
 		connection.query('SELECT * FROM products WHERE item_id = ' + chosenId,
 			function(err, res){
 				if(err) throw err;
 				// Run only if there is enough to complete the transaction
 				if(res[0].stock_quantity >= replies.chooseQuantity){
 					buyItems(replies.chooseProd, replies.chooseQuantity, res[0].price);
+					console.log();
+					setTimeout(anotherTransaction, 2000);
 				}
 				// If 0, then custom out of stock reply, prompt for another selection
 				else if(res[0].stock_quantity == 0){
