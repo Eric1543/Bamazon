@@ -99,11 +99,13 @@ function chooseItems(){
 				}
 				// If 0, then custom out of stock reply, prompt for another selection
 				else if(res[0].stock_quantity == 0){
+					console.log();
 					console.log("I'm sorry that item is currently out of stock. Please make another selection.");
 					chooseItems();
 				}
 				// If inventory is less than requested order, prompt for another selection
 				else if(res[0].stock_quantity < replies.chooseQuantity){
+					console.log();
 					console.log("I'm sorry there are only " + res[0].stock_quantity + " of those in stock. Please make a smaller selection.")
 					chooseItems();
 				}
