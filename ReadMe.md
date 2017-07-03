@@ -1,4 +1,4 @@
-This is a program that allows a user to make purchases from bamazon through the console. The transactions query and update a mysql database through node on the command line.
+This is a program that allows a user to make purchases from bamazon through the console. The transactions query and update a mysql database through node.js on the command line.
 
 Bamazon Welcome Screen
 ![Bamazon Welcome Screen](https://github.com/Eric1543/Bamazon/blob/master/Bamazon%20Screenshots/1%20Welcome%20Screen.jpg)
